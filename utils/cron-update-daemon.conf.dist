@@ -1,0 +1,27 @@
+# Exapmle configuration file for cron-update-daemon.bash, if you need it, copy
+# this file to cron-update-daemon.conf and customise to your liking
+# Note: you don't need this file unless you or your host move stuff around 
+# Note: You might want to create a read-only empty configuration file to prevent
+# code injection to the shell script
+
+# Uncomment the following to customize where sould tog log a pnd pid file go
+#LOG_FILE="/path/to/your/logfile.log"
+#PID_FILE="/path/to/your/pidfile.pid"
+
+# How nice(1) do you want to be to your host
+#NICE_LEVEL=10
+# How many lines of log should we output when we detect the daemon is down
+#LOG_LINES=10
+
+# Locations of important commands, uncomment and adjust if your host moves
+# things around
+#PHP="/usr/bin/php"
+#NOHUP="/usr/bin/nohup"
+#NICE="/usr/bin/nice"
+#TAIL="/usr/bin/tail"
+#PS="/bin/ps"
+#CAT="/bin/cat"
+
+# Where the TT-RSS update daemon is
+#DAEMON="/path/to/your/update_daemon2.php"
+

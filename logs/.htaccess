@@ -1,0 +1,5 @@
+# Deny access to the logs directory by default - at the very lease you should
+# password protect this directory. You may also want to setup something like
+# https://code.google.com/p/php-tail/ here
+Order deny,allow
+Deny from all
