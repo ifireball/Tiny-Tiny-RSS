@@ -85,7 +85,7 @@ ROTATE_DURATION="${ROTATE_DURATION,,}"
 [[ -n "$MAX_LOG_SIZE" || -n "$ROTATE_DURATION" ]] || MAX_LOG_SIZE="500M"
 
 # Check to see if we have everything we need
-for CMD in $PHP $NOHUP $NICE $TAIL $PS $CAT $MKTEMP; do
+for CMD in $PHP $NOHUP $TAIL $PS $CAT $MKTEMP; do
 	test -x $CMD || die -2 "Cannot find required command: $CMD"
 done
 # Since logrotate(8) may be less common then the rest look for it only if we
@@ -135,7 +135,15 @@ fi
 
 echo "Invoking TT-RSS update daemon..."
 cd "$RUN_DIR"
-$NOHUP $NICE -n $NICE_LEVEL $PHP "$DAEMON" >> "$LOG_FILE" 2>&1 < /dev/null &
+# Not all hosts let you use 'nice' so run without it if it isn't there
+if [[ -x "$NICE" ]]; then
+	$NOHUP $NICE -n $NICE_LEVEL $PHP "$DAEMON" >> "$LOG_FILE" 2>&1 < /dev/null &
+else 
+	# Warn if user wanted nice level != 0
+	[[ $NICE_LEVEL -ne 0 ]] && 
+		warn "'nice' command not found at '$NICE', effective nice level will be 0"
+	$NOHUP $PHP "$DAEMON" >> "$LOG_FILE" 2>&1 < /dev/null &
+fi
 NEW_PID=$!
 echo "TT-RSS update daemon started at pid: $NEW_PID"
 echo $NEW_PID > "$PID_FILE"

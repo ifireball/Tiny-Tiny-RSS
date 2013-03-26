@@ -12,7 +12,8 @@
 #LOG_FILE="/path/to/your/logfile.log"
 #PID_FILE="/path/to/your/pidfile.pid"
 
-# How nice(1) do you want to be to your host
+# How nice(1) do you want to be to your host, If you are getting mails telling
+# you that the 'nice' command wan't found, set this to 0
 #NICE_LEVEL=10
 # How many lines of log should we output when we detect the daemon is down
 #LOG_LINES=10
