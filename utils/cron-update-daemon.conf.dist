@@ -2,9 +2,13 @@
 # this file to cron-update-daemon.conf and customise to your liking
 # Note: you don't need this file unless you or your host move stuff around 
 # Note: You might want to create a read-only empty configuration file to prevent
-# code injection to the shell script
+# code injection to the shell script, becasue the configuration file is sourced
+# by this script. This also means you can go crazy here with bash commands,
+# variables and logic.
+# Note: Most values given in comments in this file are the default values the
+# script would use if not overidden here.
 
-# Uncomment the following to customize where sould tog log a pnd pid file go
+# Uncomment the following to customize where sould the log a and pid file go
 #LOG_FILE="/path/to/your/logfile.log"
 #PID_FILE="/path/to/your/pidfile.pid"
 
@@ -12,6 +16,21 @@
 #NICE_LEVEL=10
 # How many lines of log should we output when we detect the daemon is down
 #LOG_LINES=10
+
+# Wether to rotate the log using logrotate(8)
+#ROTATE_LOG='yes'
+# How many old rotated logs to keep
+#OLD_LOGS_TO_KEEP=5
+# How big can a log file get before it is forced to rotate, you can specify
+# empty value to not rotate base on size
+#MAX_LOG_SIZE='500M'
+# In what duration to rotate logs could be 'daily', 'weekly', 'monthly', or
+# 'yearly' any other value would cause the log to be rotated based on size
+# alone, in that case MAX_LOG_SIZE will be set to '500M' if unset.
+#ROTATE_DURATION='weekly'
+# Where logrotate keeps track of log rotation state, please uncomment this line
+# if you customized the LOG_FILE parameter
+#LR_STATE_FILE="${LOG_FILE}.state"
 
 # Locations of important commands, uncomment and adjust if your host moves
 # things around
@@ -21,6 +40,8 @@
 #TAIL="/usr/bin/tail"
 #PS="/bin/ps"
 #CAT="/bin/cat"
+#MKTEMP="/bin/mktemp"
+#LOGROTATE="/usr/sbin/logrotate"
 
 # Where the TT-RSS update daemon is
 #DAEMON="/path/to/your/update_daemon2.php"
