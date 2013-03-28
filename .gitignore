@@ -9,3 +9,5 @@ lock/*
 tags
 cache/htmlpurifier/*/*ser
 lib/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer/*/*ser
+logs/*.log
+logs/*.log.*
