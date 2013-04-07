@@ -1,0 +1,82 @@
+HOW TO RUN THE TESTS
+====================
+
+Short version:
+--------------
+
+1. Install PHPUnit
+2. Create test database
+3. Run tests
+
+
+Installing PHPUnit
+------------------
+On Ubuntu:
+The following assumes you are running everything from your home directory and
+do not want to install things on the system level. We also assume that you have
+a "~/bin" directory and it is confugured in $PATH (Ubuntu`s default ".profile"
+does this), and that you want library PHP files installed somwhere like
+"~/apps".
+
+0. Create directories (If you don't already have them):
+
+    mkdir -p ~/bin ~/apps/lib/php
+
+1. Install pyrus
+
+    curl http://pear2.php.net/pyrus.phar -o ~/apps/pyrus.phar
+
+2. Configure local install directory for PHP libraries and scripts:
+
+     php ~/apps/pyrus.phar mypear ~/apps/lib/php
+     php ~/apps/pyrus.phar set bin_dir ~/bin
+
+   You'd probably want to permanently add "~/apps/lib/php/php" to your
+   "include_path", one way to do it is by putting your own php.ini file
+   somewhere and setting PHPRC enviroment variable to point to it.  For
+   example, on my system I've copied php.ini to "~/.php.ini" in my home
+   directory with the following line added to it: 
+
+     include_path = ".:/usr/share/php:${HOME}/apps/lib/php/php"
+
+   And then I placed the following in my "~/.profile":
+
+     # Use php.ini file from home directory if it exists
+     test -r "$HOME/.php.ini" && export PHPRC="$HOME/.php.ini"
+
+3. Install PHPUnit and DBUnit
+
+     php ~/apps/pyrus.phar install pear.phpunit.de/PHPUnit
+     php ~/apps/pyrus.phar install pear.phpunit.de/DbUnit
+
+
+Creating the test database
+--------------------------
+Using MySQL:
+
+1. Create test database and user (From MySQL SQL prompt):
+
+    CREATE DATABASE tt-rss-testing;
+    GRANT ALL PRIVILEGES ON tt-rss-testing.* TO tt-rss-testing@localhost IDENTIFIED BY 'testing1234';
+
+2. Load testing schema (from shell):
+
+    mysql -u tt-rss-testing --password=testing1234 tt-rss-testing < tests/tt-rss-testing-schema-mysql.sql
+
+
+Running the tests
+-----------------
+
+You should be in the TT-RSS source top directory to run the tests, otherwise
+you'll have require() commands failing in the scripts.
+
+  cd /path/to/tt-rss/install
+
+Run the tests with the following command:
+
+  phpunit tests
+
+Or to get more detailed output:
+
+  phpunit --debug --colors tests
+  

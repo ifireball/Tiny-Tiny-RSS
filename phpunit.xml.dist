@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Configuration file for PHPUnit - unit testing framework -->
+<!-- This is only needed for development, not everyday TT-RSS use -->
+<!-- To customize, copy this file to "phpunit.xml" and change to your liking -->
+<phpunit>
+    <php>
+        <var name="TEST_DB_TYPE" value="mysql" />
+        <var name="TEST_DB_HOST" value="localhost" />
+        <var name="TEST_DB_PORT" value="" />
+        <var name="TEST_DB_USER" value="tt-rss-testing" />
+        <var name="TEST_DB_PASSWD" value="testing1234" />
+        <var name="TEST_DB_DBNAME" value="tt-rss-testing" />
+    </php>
+</phpunit>
