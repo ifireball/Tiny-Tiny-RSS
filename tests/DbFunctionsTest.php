@@ -91,6 +91,16 @@ class DbFuctionsTest extends PHPUnit_Extensions_Database_TestCase
 		$this->assertEquals(db_escape_string($dblink, $str), $escaped);
 		$this->assertEquals(db_escape_string($dblink, $str, false), $unstripped);
 	}
+
+	/**
+	 * @depends testDbConnect
+	 * @dataProvider stringsToEscape
+	 */
+	public function testDbUnescapeString($str, $escaped, $unstripped, $dblink)
+	{
+		$this->assertEquals(db_unescape_string($unstripped), $str);
+	}
+
 	public function stringsToEscape()
 	{
 		return array(
@@ -152,6 +162,18 @@ class DbFuctionsTest extends PHPUnit_Extensions_Database_TestCase
 	{
 		$this->assertEquals($this->getConnection()->getRowCount('DbFunctionsTest_table'), 
 			db_num_rows($result));
+	}
+
+	/**
+	 * @depends testDbQuerySelect
+	 * @dataProvider tableData
+	 */
+	public function testDbFetchResult($row_num, $expected_row, $result)
+	{
+		foreach(array_values($expected_row) as $i => $expected_value) {
+			$value = db_fetch_result($result, $row_num, $i);
+			$this->assertEquals($expected_value, $value);
+		}
 	}
 }
 
