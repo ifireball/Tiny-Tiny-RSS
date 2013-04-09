@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="tt-rss-testing">
+	<table_data name="DbFunctionsTest_table">
+	<row>
+		<field name="a_key">1</field>
+		<field name="a_varchar">Ut condimentum magna ac est condimentum sollicitudin.</field>
+		<field name="a_integer">423</field>
+		<field name="a_datetime">2013-04-02 08:20:38</field>
+		<field name="a_bool">0</field>
+		<field name="a_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lobortis augue a odio vulputate placerat ultrices tellus blandit. Suspendisse dapibus vehicula bibendum. Suspendisse auctor bibendum nibh, in consequat sapien gravida vel. Sed mattis mollis purus sit amet feugiat. Nunc leo mauris, viverra eget accumsan eu, dignissim vitae elit. Morbi ut mauris purus, eu rutrum velit. Phasellus porttitor mollis vehicula. In ut accumsan neque. Nullam elit sem, suscipit eget auctor et, fermentum ut lorem. Ut at augue in quam tincidunt rutrum at eget metus. Ut dictum orci ac nibh tincidunt vel pulvinar odio ultricies. </field>
+	</row>
+	<row>
+		<field name="a_key">2</field>
+		<field name="a_varchar">Suspendisse potenti.</field>
+		<field name="a_integer">7</field>
+		<field name="a_datetime">2013-03-11 18:31:00</field>
+		<field name="a_bool">0</field>
+		<field name="a_text">Etiam nisi sem, pharetra id mollis tincidunt, bibendum non mauris. Integer gravida pretium purus, eget accumsan erat ornare sed. Pellentesque vitae dolor rhoncus orci bibendum sollicitudin. Praesent tempor mattis mi eu posuere. Cras luctus blandit odio nec condimentum. Donec eget scelerisque tellus. Pellentesque vitae orci et magna convallis rhoncus. Nulla sed magna sapien, et aliquet leo. Duis porta, nulla vitae iaculis volutpat, justo erat vehicula eros, et condimentum neque velit condimentum ligula. Donec tristique pellentesque erat, in blandit quam auctor sit amet. </field>
+	</row>
+	<row>
+		<field name="a_key">3</field>
+		<field name="a_varchar">Aliquam erat volutpat.</field>
+		<field name="a_integer">890</field>
+		<field name="a_datetime" xsi:nil="true" />
+		<field name="a_bool">0</field>
+		<field name="a_text">Nullam vitae faucibus nulla. Cras quis sem nulla, a posuere nunc. Aenean tempus leo eget dolor luctus malesuada. Morbi feugiat elementum risus nec blandit. Praesent porta placerat nunc, et molestie nunc aliquam nec. Donec posuere justo volutpat mi feugiat eleifend pellentesque nunc ullamcorper.</field>
+	</row>
+	<row>
+		<field name="a_key">4</field>
+		<field name="a_varchar">Maecenas egestas malesuada ligula, eu hendrerit elit ornare ut.</field>
+		<field name="a_integer">0</field>
+		<field name="a_datetime">2013-01-08 23:18:00</field>
+		<field name="a_bool">1</field>
+		<field name="a_text" xsi:nil="true" />
+	</row>
+	<row>
+		<field name="a_key">5</field>
+		<field name="a_varchar">Lorem ipsum</field>
+		<field name="a_integer">101</field>
+		<field name="a_datetime">2013-04-09 22:19:38</field>
+		<field name="a_bool">0</field>
+		<field name="a_text">dolor sit amet</field>
+	</row>
+	</table_data>
+</database>
+</mysqldump>

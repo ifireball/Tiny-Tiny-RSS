@@ -58,6 +58,13 @@ class DbFuctionsTest extends PHPUnit_Extensions_Database_TestCase
 		return $this->createMySQLXMLDataSet(
 			preg_replace('/.php$/', 'Data.xml', __FILE__));
 	}
+	public function getExtraDataSet()
+	{
+		// Returns almost same data as GetDataSet() but with 1 extra 
+		// row in the table
+		return $this->createMySQLXMLDataSet(
+			preg_replace('/.php$/', 'ExtraData.xml', __FILE__));
+	}
 
 	/**
 	 * Setup testing fixture
@@ -131,6 +138,7 @@ class DbFuctionsTest extends PHPUnit_Extensions_Database_TestCase
 	public function testDbFetchAssoc($row_num, $expected_row, $result)
 	{
 		$fetched_row = db_fetch_assoc($result);
+		$this->assertInternalType('array', $fetched_row);
 		$this->assertEquals(array_keys($expected_row), array_keys($fetched_row));
 		foreach($fetched_row as $fetched_field => $fetched_value) {
 			$expected_value = $expected_row[$fetched_field];
@@ -175,6 +183,35 @@ class DbFuctionsTest extends PHPUnit_Extensions_Database_TestCase
 			$this->assertEquals($expected_value, $value);
 		}
 	}
-}
 
+	/**
+	 * @depends testDbConnect
+	 */
+	public function testDbQueryInsert($dblink)
+	{
+		$xds = $this->getExtraDataSet();
+		$expected_table = $xds->getTable('DbFunctionsTest_table');
+		$row = $expected_table->getRow($expected_table->getRowCount() - 1);
+		$sql = 'INSERT INTO DbFunctionsTest_table ' .
+			'('.implode(array_keys($row), ',').')' .
+			'VALUES' .
+			'('.implode(array_map(function($v) { return is_numeric($v) ? $v : "'$v'"; }, $row),',').')';
+		$result = db_query($dblink, $sql);
+		$this->assertNotNull($result);
+		$result_table = $this->getConnection()->createQueryTable(
+			'DbFunctionsTest_table', 'SELECT * FROM DbFunctionsTest_table'
+		);
+		$this->assertTablesEqual($expected_table, $result_table);
+		return array($dblink, $result);
+	}
+
+	/**
+	 * @depends testDbQueryInsert
+	 */
+	public function testDbAffectedRowsInsert(array $link_result)
+	{
+		$this->assertEquals(1, 
+			call_user_func_array('db_affected_rows', $link_result));
+	}
+}
 ?>
