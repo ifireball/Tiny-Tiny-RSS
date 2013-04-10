@@ -213,5 +213,38 @@ class DbFuctionsTest extends PHPUnit_Extensions_Database_TestCase
 		$this->assertEquals(1, 
 			call_user_func_array('db_affected_rows', $link_result));
 	}
+
+	/**
+	 * @depends testDbConnect
+	 */
+	public function testDbQueryDelete($dblink)
+	{
+		$source_table = $this->getConnection()->createQueryTable(
+			'DbFunctionsTest_table', 'SELECT * FROM DbFunctionsTest_table');
+		$expected_table = new PHPUnit_Extensions_Database_DataSet_DefaultTable(
+			$source_table->getTableMetaData());
+		for($i = 0; $i < $source_table->getRowCount(); ++$i) {
+			$row = $source_table->getRow($i);
+			if ($row['a_integer'] > 10) continue;
+			$expected_table->addRow($row);
+		}
+		$sql = 'DELETE FROM DbFunctionsTest_table WHERE a_integer > 10';
+		$result = db_query($dblink, $sql);
+		$this->assertNotNull($result);
+		$result_table = $this->getConnection()->createQueryTable(
+			'DbFunctionsTest_table', 'SELECT * FROM DbFunctionsTest_table'
+		);
+		$this->assertTablesEqual($expected_table, $result_table);
+		return array($dblink, $result,
+			$source_table->getRowCount() - $expected_table->getRowCount());
+	}
+
+	/**
+	 * @depends testDbQueryDelete
+	 */
+	public function testDbAffectedRowsDelete(array $lre)
+	{
+		$this->assertEquals($lre[2], db_affected_rows($lre[0], $lre[1]));
+	}
 }
 ?>
