@@ -246,5 +246,43 @@ class DbFuctionsTest extends PHPUnit_Extensions_Database_TestCase
 	{
 		$this->assertEquals($lre[2], db_affected_rows($lre[0], $lre[1]));
 	}
+
+	/**
+	 * @depends testDbConnect
+	 */
+	public function testDbQueryUpdate($dblink)
+	{
+		$source_table = $this->getConnection()->createQueryTable(
+			'DbFunctionsTest_table', 'SELECT * FROM DbFunctionsTest_table');
+		$expected_table = new PHPUnit_Extensions_Database_DataSet_DefaultTable(
+			$source_table->getTableMetaData());
+		$expected_effected_rows = 0;
+		for($i = 0; $i < $source_table->getRowCount(); ++$i) {
+			$row = $source_table->getRow($i);
+			if ($row['a_integer'] > 10) { 
+				$row['a_varchar'] = 'Super Kali';
+				++$expected_effected_rows;
+			}
+			$expected_table->addRow($row);
+		}
+		$sql = 'UPDATE DbFunctionsTest_table '.
+			'SET a_varchar=\'Super Kali\''.
+			'WHERE a_integer > 10';
+		$result = db_query($dblink, $sql);
+		$this->assertNotNull($result);
+		$result_table = $this->getConnection()->createQueryTable(
+			'DbFunctionsTest_table', 'SELECT * FROM DbFunctionsTest_table'
+		);
+		$this->assertTablesEqual($expected_table, $result_table);
+		return array($dblink, $result, $expected_effected_rows);
+	}
+
+	/**
+	 * @depends testDbQueryUpdate
+	 */
+	public function testDbAffectedRowsUpdate(array $lre)
+	{
+		$this->assertEquals($lre[2], db_affected_rows($lre[0], $lre[1]));
+	}
 }
 ?>
