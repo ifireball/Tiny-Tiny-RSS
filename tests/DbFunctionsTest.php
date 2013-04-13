@@ -284,5 +284,31 @@ class DbFuctionsTest extends PHPUnit_Extensions_Database_TestCase
 	{
 		$this->assertEquals($lre[2], db_affected_rows($lre[0], $lre[1]));
 	}
+
+	/**
+	 * @depends testDbConnect
+         * @dataProvider goodnbadQueries
+	 */
+	public function testDbLastError($sql, $expected_error, $dblink)
+	{
+		$result = db_query($dblink, $sql, false);
+                $error = db_last_error($dblink);
+                if($expected_error) {
+                        $this->assertEmpty($result);
+                        $this->assertNotEmpty($error);
+                } else {
+                        $this->assertNotEmpty($result);
+                        $this->assertEmpty($error);
+                }
+	}
+
+        public function goodnbadQueries() 
+        {
+                return array(
+                        // query                                      //error expected?
+                        array('SELECT * FROM DbFunctionsTest_nonexistatnt', true),
+                        array('SELECT * FROM DbFunctionsTest_table',        false),
+                );
+        }
 }
 ?>
