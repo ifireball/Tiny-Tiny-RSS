@@ -1,6 +1,3 @@
 #!/bin/sh
-if [ -f ${OPENSHIFT_DATA_DIR}/.schema_deployed ]; then
-	$OPENSHIFT_REPO_DIR/update.php --feeds &>
-		$OPENSHIFT_LOG_DIR/rss_update.log
-fi
-exit 0
+$OPENSHIFT_REPO_DIR/update.php --feeds &>
+	$OPENSHIFT_LOG_DIR/rss_update.log
