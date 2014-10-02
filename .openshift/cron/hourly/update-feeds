@@ -1,3 +1,2 @@
 #!/bin/sh
-$OPENSHIFT_REPO_DIR/update.php --feeds &>
-	$OPENSHIFT_LOG_DIR/rss_update.log
+$OPENSHIFT_REPO_DIR/update.php --feeds &> $OPENSHIFT_LOG_DIR/rss_update.log
